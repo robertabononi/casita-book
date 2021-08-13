@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { NewUserService } from './new-user.service';
 import { UserExistsService } from './user-exists.service';
@@ -19,7 +20,8 @@ export class NewUserComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private newUserService: NewUserService,
-    private userExistsService: UserExistsService
+    private userExistsService: UserExistsService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -37,8 +39,13 @@ export class NewUserComponent implements OnInit {
   }
 
   register() {
-    const newUser = this.newUserForm.getRawValue() as NewUser;
-    console.log(newUser)
+    if(this.newUserForm.valid) {
+      const newUser = this.newUserForm.getRawValue() as NewUser;
+      this.newUserService.registerNewUser(newUser).subscribe(() => {
+        this.router.navigate(['']);
+      },
+        (error) => console.log(error)
+      )
+    }
   }
-
 }
