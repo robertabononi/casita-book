@@ -14,4 +14,8 @@ export class NewUserService {
   registerNewUser(newUser: NewUser) {
     return this.http.post(this.url, newUser);
   }
+
+  verifyExistingUser(userName: string) {
+    return this.http.get(`http://localhost:3000/user/exists/${userName}`);
+  }
 }
