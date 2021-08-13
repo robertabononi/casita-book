@@ -47,6 +47,10 @@
 
   <div class="form-group">
     <input type="password" class="form-control" placeholder="Senha" formControlName="password">
+    <app-message
+      *ngIf="newUserForm.errors?.equalUsernameAndPassword"
+      message="Senha deve ser diferente do usuário"
+    ></app-message>
   </div>
 
   <div class="d-grid mt-3">
